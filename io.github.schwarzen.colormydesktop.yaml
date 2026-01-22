@@ -1,0 +1,46 @@
+id: io.github.schwarzen.colormydesktop
+runtime: org.gnome.Platform
+runtime-version: '49' # GNOME ver
+sdk: org.gnome.Sdk
+command: color-my-desktop
+modules:
+
+  - name: dart-sass
+    buildsystem: simple
+    build-commands:
+      - install -d /app/bin
+      - cp -r * /app/bin/
+      - ln -s /app/bin/sass /app/bin/sass-embedded 
+    sources:
+      - type: archive
+        url: https://github.com/sass/dart-sass/releases/download/1.97.1/dart-sass-1.97.1-linux-x64.tar.gz
+
+        sha256: 08867d2f63f458bc07985d0fd96bfef42ed759a4dd9b3d5e1a87b85b52b76112
+
+
+
+  - name: color-my-desktop
+    buildsystem: simple
+    build-commands:
+      - make -f Makefile.flatpak
+      - make -f Makefile.flatpak install PREFIX=/app
+    sources:
+    #   - type: dir
+    #     path: .
+       - type: git
+         url: https://github.com/Schwarzen/Color-My-Desktop
+         tag: v0.10
+         commit: b81c9448b27d6fb174e9f38989a009d5be8a3deb
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+
+
+ 
+
+
+  
+ 
+ 
